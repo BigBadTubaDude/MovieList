@@ -17,9 +17,11 @@
 		</header>
 		<h1 id='movieTitle'></h1>
 		<?php
-        // if (isset($_POST['userName'])) {
-            echo ( "<h1>$_SERVER[PHP_SELF]</h1>");
-        // }
+        if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == true) {
+            echo ( "<h1>Welcome</h1>");
+        } else {
+			echo ("<h1>Sorry not logged in</h1>");
+		}
 			
 		?>
 	</body>

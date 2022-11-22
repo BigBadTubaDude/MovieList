@@ -18,34 +18,45 @@
 
 		
 		<?php
-			// Adds username, password, json of movie list (incremental movie number: movie name), review list (movie name: review string), review rating (movie name: 1-10), date joined)
 			
+			//If user navigates to this page, they are logged out (only option when logged in will be log out button)
+			$_SESSION['LoggedIn'] = false;
+
+			// Adds username, password, json of movie list (incremental movie number: movie name), review list (movie name: review string), review rating (movie name: 1-10), date joined)
+
 			$conn = new mysqli("localhost", "root", "", "test");			
 			$maxAttempts = 7;
-			$checkIfUserExistsQuery = 
-				(<<<HERE
-					SELECT * FROM users 
-					WHERE 
-					userName='$_POST[userName]';		
-				HERE);
 			printLoginForm();
 			
-			
+			//If a user has selected and submitted form
 			if (isset($_POST['radLogin'])) {
 				
 				//If user selected "Login"
 				if ($_POST['radLogin'] == 'login') {
 					if (isset($_POST['userName']) 
-						&& validateUserNameInput($_POST['userName']) 
-						&& isset($_POST['password']) 
-						&& validatePasswordInput($_POST['password']))
-					{
-					}
-					//USE query to check user and pass
-					if (false) {
-						
-					}
+					&& validateUserNameInput($_POST['userName']) 
+					&& isset($_POST['password']) 
+					&& validatePasswordInput($_POST['password'])){
+					 $checkIfUserPassMatchQuery = 
+						(<<<HERE
+							SELECT * FROM users 
+							WHERE 
+							userName='$_POST[userName]' AND
+							password='$_POST[password]';		
+						HERE);
+						$userPassMatch = mysqli_query($conn, $checkIfUserPassMatchQuery) or die ("fatal error: " . mysqli_error($mysql));
+						//USE query to check user and pass
+						if ($userPassMatch->num_rows < 1) {
+							echo ("Incorrect username or password. Try again.");
+						} else { //Correct user/pass
+							//Logs user in and directs them to main page
+							$_SESSION['LoggedIn'] = true;
+							header("Location: /movielist/movieList.php");
+
+						}
+
 				}
+			}
 				
 				//If user selected New User
 				if ($_POST['radLogin'] == 'newUser') {
@@ -54,6 +65,12 @@
 						&& validateUserNameInput($_POST['userName']) 
 						&& isset($_POST['password']) 
 						&& validatePasswordInput($_POST['password'])){		
+							$checkIfUserExistsQuery = 
+								(<<<HERE
+									SELECT * FROM users 
+									WHERE 
+									userName='$_POST[userName]';		
+								HERE);
 							$result = mysqli_query($conn, $checkIfUserExistsQuery) or die ("fatal error: " . mysqli_error($mysql));				
 							if ($result->num_rows < 1) {
 								$addNewUserQuery = (<<<HERE
