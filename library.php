@@ -2,6 +2,7 @@
 
 // start or continue the session_cache_expire
 session_start();
+$_SESSION['LoggedIn'];
 /*
 Coleman Alexander
 Date 11/30/2022

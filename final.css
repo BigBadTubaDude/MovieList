@@ -2,3 +2,10 @@
 	Coleman Alexander
 	Date 11/30/2022
 */
+.hidden {
+	visibility: hidden;
+}
+.displayNone {
+	display: none;
+	visibility: hidden;
+}
