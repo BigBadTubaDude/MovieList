@@ -24,7 +24,7 @@
 
 			// Adds username, password, json of movie list (incremental movie number: movie name), review list (movie name: review string), review rating (movie name: 1-10), date joined)
 
-			$conn = new mysqli("localhost", "root", "", "test");			
+			$conn = new mysqli("localhost", "root", "", "users");			
 			$maxAttempts = 7;
 			printLoginForm();
 			
@@ -39,7 +39,7 @@
 					&& validatePasswordInput($_POST['password'])){
 					 $checkIfUserPassMatchQuery = 
 						(<<<HERE
-							SELECT * FROM users 
+							SELECT * FROM userinfo 
 							WHERE 
 							userName='$_POST[userName]' AND
 							password='$_POST[password]';		
@@ -67,21 +67,21 @@
 						&& validatePasswordInput($_POST['password'])){		
 							$checkIfUserExistsQuery = 
 								(<<<HERE
-									SELECT * FROM users 
+									SELECT * FROM userinfo 
 									WHERE 
 									userName='$_POST[userName]';		
 								HERE);
 							$result = mysqli_query($conn, $checkIfUserExistsQuery) or die ("fatal error: " . mysqli_error($mysql));				
 							if ($result->num_rows < 1) {
 								$addNewUserQuery = (<<<HERE
-									INSERT INTO users 
+									INSERT INTO userinfo 
+									(userName, password, reviewStars, reviewParagraph, movieList)
 									values (
 										'$_POST[userName]',
 										'$_POST[password]',
 										'{}', 
 										'{}',
-										'{}',
-										curdate()
+										'{}'
 									);
 									HERE);
 									$result = mysqli_query($conn, $addNewUserQuery) or die ("fatal error: " . mysqli_error($mysql));
