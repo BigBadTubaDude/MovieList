@@ -13,13 +13,13 @@
   // .then((response) => response.json())
   // .then((data) => console.log(data));  
   // console.log
-  document.getElementById("G60").addEventListener("click", insertX());
-  document.getElementById("G60").innerHTML = "dfdfd"
+  // document.getElementById("G60").addEventListener("click", insertX());
+  // document.getElementById("G60").innerHTML = "dfdfd"
   function insertX() {
     document.getElementById("G60").innerHTML = Date();
     console.log("hi")
   }
-  let numberOfRows = 20;
+  let numberOfRows = 15;
   let noteList = [
     'Ab',
     'A',
@@ -60,14 +60,15 @@
     '160',
     '168'
   ]
-  var chartTableBody = document.getElementById('scaleChartBody') //table body element
+  const chartTableBody = document.getElementById('scaleChartBody')
+  console.log(chartTableBody) //table body element
   for (let i = 0; i < numberOfRows; i++) {
     let trTag = document.createElement("tr");
     trTag.setAttribute('id', `row${i + 1}`);
     chartTableBody.append(trTag);
-    for (let n = 0; n < noteList.length; n++) { // for every note, add a td to this row
+    for (let n = 0; n <= noteList.length; n++) { // for every note,and a blank row on the left, add a td to this row
       let tdTag = document.createElement("td"); //create td
-      if (i == 0) { // if leftmost column, add tempo 
+      if (n == 0) { // if leftmost column, add tempo 
         let tempoText = document.createTextNode(`${tempoList[i]}`); //create tempo text node
         tdTag.appendChild(tempoText); //add tempo to td
       }
