@@ -19,3 +19,60 @@
     document.getElementById("G60").innerHTML = Date();
     console.log("hi")
   }
+  let numberOfRows = 20;
+  let noteList = [
+    'Ab',
+    'A',
+    'Bb',
+    'B',
+    'C',
+    'Db',
+    'D',
+    'Eb',
+    'E',
+    'F',
+    'Gb',
+    'G'
+  ]
+  let tempoList = [
+    '60',
+    '63',
+    '66',
+    '69',
+    '72',
+    '76',
+    '80',
+    '84',
+    '88',
+    '92',
+    '96',
+    '100',
+    '104',
+    '108',
+    '112',
+    '116',
+    '120',
+    '126',
+    '132',
+    '138',
+    '144',
+    '152',
+    '160',
+    '168'
+  ]
+  var chartTableBody = document.getElementById('scaleChartBody') //table body element
+  for (let i = 0; i < numberOfRows; i++) {
+    let trTag = document.createElement("tr");
+    trTag.setAttribute('id', `row${i + 1}`);
+    chartTableBody.append(trTag);
+    for (let n = 0; n < noteList.length; n++) { // for every note, add a td to this row
+      let tdTag = document.createElement("td"); //create td
+      if (i == 0) { // if leftmost column, add tempo 
+        let tempoText = document.createTextNode(`${tempoList[i]}`); //create tempo text node
+        tdTag.appendChild(tempoText); //add tempo to td
+      }
+      trTag.appendChild(tdTag); //add td to row
+    }
+
+  }
+
