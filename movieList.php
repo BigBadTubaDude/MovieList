@@ -17,12 +17,11 @@
 			<div class= 
 				<?php 
 				if ($_SESSION['LoggedIn']) {
-					echo("'loginContainer'");
-				} else {
-					echo("'displayNone'") ;
+					echo('displayNone') ;
+        } else {
+					echo('loginContainer');
 				}?>
 				>
-				</script>
 				
 					<h3>Log in to save progress</h3>
 					<button class="loginButton"><a href="./login.php">Login</a></button>
@@ -34,6 +33,9 @@
 		<?php
         if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == true) {
             echo ( "<h1>Welcome</h1>");
+            echo( "<form method='post' action='./login.php'>");
+            echo ("<button>Logout</button>");
+            echo ("</form>");
         } else {
 			echo ("<h1>Sorry not logged in</h1>");
 		}

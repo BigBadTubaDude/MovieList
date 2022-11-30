@@ -37,13 +37,14 @@
 					&& validateUserNameInput($_POST['userName']) 
 					&& isset($_POST['password']) 
 					&& validatePasswordInput($_POST['password'])){
-					 $checkIfUserPassMatchQuery = 
-						(<<<HERE
-							SELECT * FROM userinfo 
-							WHERE 
-							userName='$_POST[userName]' AND
-							password='$_POST[password]';		
-						HERE);
+						$retrievedHashedPassword = md5($_POST['password'], false);
+					 	$checkIfUserPassMatchQuery = 
+							(<<<HERE
+								SELECT * FROM userinfo 
+								WHERE 
+								userName='$_POST[userName]' AND
+								password='$retrievedHashedPassword';		
+							HERE);
 						$userPassMatch = mysqli_query($conn, $checkIfUserPassMatchQuery) or die ("fatal error: " . mysqli_error($mysql));
 						//USE query to check user and pass
 						if ($userPassMatch->num_rows < 1) {
@@ -73,12 +74,13 @@
 								HERE);
 							$result = mysqli_query($conn, $checkIfUserExistsQuery) or die ("fatal error: " . mysqli_error($mysql));				
 							if ($result->num_rows < 1) {
+								$hashedPassword = md5($_POST['password'], false);
 								$addNewUserQuery = (<<<HERE
 									INSERT INTO userinfo 
 									(userName, password, reviewStars, reviewParagraph, movieList)
 									values (
 										'$_POST[userName]',
-										'$_POST[password]',
+										'$hashedPassword',
 										'{}', 
 										'{}',
 										'{}'

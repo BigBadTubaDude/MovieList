@@ -13,9 +13,9 @@
   // .then((response) => response.json())
   // .then((data) => console.log(data));  
   // console.log
-  document.getElementById("G60").addEventListener("click", insertX);
+  document.getElementById("G60").addEventListener("click", insertX());
   document.getElementById("G60").innerHTML = "dfdfd"
   function insertX() {
     document.getElementById("G60").innerHTML = Date();
-    // console.log("hi")
+    console.log("hi")
   }
