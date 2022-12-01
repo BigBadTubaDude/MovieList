@@ -73,20 +73,19 @@
 									userName='$_POST[userName]';		
 								HERE);
 							$result = mysqli_query($conn, $checkIfUserExistsQuery) or die ("fatal error: " . mysqli_error($mysql));				
-							if ($result->num_rows < 1) {
-								$hashedPassword = md5($_POST['password'], false);
+							if ($result->num_rows < 1) { //a correct user/pass combo exists
+								$hashedPassword = md5($_POST['password'], false); //hash inputted password to compare to database
 								$addNewUserQuery = (<<<HERE
 									INSERT INTO userinfo 
-									(userName, password, reviewStars, reviewParagraph, movieList)
+									(userName, password, Scales)
 									values (
 										'$_POST[userName]',
 										'$hashedPassword',
-										'{}', 
-										'{}',
 										'{}'
 									);
 									HERE);
 									$result = mysqli_query($conn, $addNewUserQuery) or die ("fatal error: " . mysqli_error($mysql));
+									echo ("Thank you for creating an account.</br> Please log in.");
 							} else {
 								print ("That user already exists. Please log in.");
 							}

@@ -13,12 +13,6 @@
   // .then((response) => response.json())
   // .then((data) => console.log(data));  
   // console.log
-  // document.getElementById("G60").addEventListener("click", insertX());
-  // document.getElementById("G60").innerHTML = "dfdfd"
-  function insertX() {
-    document.getElementById("G60").innerHTML = Date();
-    console.log("hi")
-  }
   let numberOfRows = 15;
   let noteList = [
     'Ab',
@@ -60,6 +54,7 @@
     '160',
     '168'
   ]
+  
   const chartTableBody = document.getElementById('scaleChartBody')
   console.log(chartTableBody) //table body element
   for (let i = 0; i < numberOfRows; i++) {
@@ -71,9 +66,29 @@
       if (n == 0) { // if leftmost column, add tempo 
         let tempoText = document.createTextNode(`${tempoList[i]}`); //create tempo text node
         tdTag.appendChild(tempoText); //add tempo to td
+      } else {
+        let cellID = `${tempoList[i]}-${noteList[n - 1]}`;
+        tdTag.setAttribute('id',`${cellID}`)
+        tdTag.setAttribute('onclick', `insertX('${cellID}')`)
+        let phpText = document.createTextNode(`
+          <?php  
+            
+          ?>
+        `)
+        tdTag.setAttribute('class', 'tg-0lax')
       }
       trTag.appendChild(tdTag); //add td to row
     }
+    
+
+
 
   }
-
+  document.getElementById("66-F").addEventListener("click", insertX());
+  // document.getElementById("60-G").innerHTML = "dfdfd";
+  function insertX() {
+    document.getElementById("63-E").innerHTML = "X";
+    console.log("hi")
+  }
+  
+  
