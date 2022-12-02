@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<header>
-			<h1>Movies I want to watch: the website</h1>
+			<h1>Scale Tracker</h1>
 			<h2>Log in</h2>
 		</header>
 
@@ -22,7 +22,6 @@
 			//If user navigates to this page, they are logged out (only option when logged in will be log out button)
 			$_SESSION['LoggedIn'] = false;
 
-			// Adds username, password, json of movie list (incremental movie number: movie name), review list (movie name: review string), review rating (movie name: 1-10), date joined)
 
 			$conn = new mysqli("localhost", "root", "", "users");			
 			$maxAttempts = 7;
@@ -66,7 +65,7 @@
 							$_SESSION['UserName'] = $row['userName'];
 							$_SESSION['UserMajor'] = '{}';
 							$_SESSION['UserMinor'] = '{}';
-							header("Location: /movielist/movieList.php");
+							header("Location: /movielist/PracticeTracker.php");
 						}
 				}
 			}
@@ -138,7 +137,7 @@
 
 				//If "back" is selected, takes user back to main page without logging in
 				if ($_POST['radLogin'] == 'back') {
-					header("Location: /movielist/movieList.php");
+					header("Location: /movielist/PracticeTracker.php");
 
 				}
 				

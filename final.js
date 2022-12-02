@@ -15,17 +15,15 @@
         let tempoText = document.createTextNode(`${tempoList[r]}`); //create tempo text node
         tdTag.appendChild(tempoText); //add tempo to td
       } else {
-        let checkText = document.createTextNode(`${currentScaleType == 'major'
-          ? userMajorScaleArray[noteList[n - 1]][n - 1]
-          : userMinorScaleArray[noteList[n - 1]][n - 1]}`); //create check text node
+        console.log(userScales['major'][noteList[n - 1]][0]);
+        let checkText = document.createTextNode(`${scaleType == 'major'
+          ? userScales['major'][noteList[n - 1]][r]
+          : userMinorScaleArray[noteList[n - 1]][r]}`); //create check text node
           // console.log(userMajorScaleArray[noteList[n - 1]][n - 1]);
         tdTag.appendChild(checkText); //add X or blank to td depending on if user has checked it
         let cellID = `${tempoList[r]}-${r}-${noteList[n - 1]}`;
-
-          
         tdTag.setAttribute('id',`${cellID}`)
         tdTag.setAttribute('onclick', `insertX('${cellID}')`)
-        //php will have IF statement. if this part of global 2D array is set to true, echo an X
         tdTag.setAttribute('class', 'tg-0lax')
       }
       trTag.appendChild(tdTag); //add td to row
@@ -33,32 +31,44 @@
   }
 }
 
+
   makeScaleChart(currentScaleType);
   //Click changes boxes
   // document.getElementById("66-F").addEventListener("click", insertX);
   // document.getElementById("60-G").innerHTML = "dfdfd";
+  function stringifySaveData() {//Saves user progress value of button, to be submitted to this page
+    //First saves current progress to an object and stringifies it
+    const savableScalesObject = JSON.stringify(userScales);//Stringify
+    const saveButton = document.getElementById('saveButton');//assign button tag to variable
+    saveButton.value = savableScalesObject; // assign stringified scales object value to button
+    console.log(saveButton);
+  }
   function insertX(id) {
     //change userscale arrays based on click
     let tdCell = document.getElementById(id);
     let note = id.substring(id.indexOf('-', id.indexOf('-') + 1) + 1);
     let index = id.substring(id.indexOf('-') + 1, id.indexOf('-', id.indexOf('-',id.indexOf('-') + 1)));
     let tempo = id.substring(0, id.indexOf('-'));
-    let available = 
-    index == 0 
-    || 
-    userMajorScaleArray[note][index - 1] == 'X';
+    let canAdd = index == 0 || userMajorScaleArray[note][index - 1] == 'X';
+    let canDelete = index == numberOfRows - 1 || userMajorScaleArray[note][index] == ' ';
 
     if (tdCell.textContent.includes(' ')) {
-      if (available) {
+      if (canAdd) {
         tdCell.innerHTML = 'X';
-        userMajorScaleArray[note][index] = 'X';
+        currentScaleType == 'major' 
+          ? userMajorScaleArray[note][index] = 'X'
+          : userMinorScaleArray[note][index] = 'X';
       }
     }
-    else {
+    else if (canDelete) {
       tdCell.innerHTML = ' ';
-      userMajorScaleArray[note][index] = ' ';
+      currentScaleType == 'major'
+        ? userMajorScaleArray[note][index] = ' '
+        : userMinorScaleArray[note][index] = ' ';
+      
     }
-    console.log(userMajorScaleArray);
+    console.log(userScales);
+    stringifySaveData();
   }
   
 

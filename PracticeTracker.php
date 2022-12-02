@@ -7,38 +7,41 @@
 		-->
 <html>
 	<head>
-		<title>Movie List</title>
+		<title>Scale Tracker</title>
 		<link href="final.css" rel="stylesheet" type="text/css" />
     <script src="variables.js"></script>
 	</head>
 	<body>
     <header>
       <h1>Scale Tracker</h1>
-			<div class= 
-      <?php         
-				if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn']) {
-          echo('displayNone') ;
-        } else {
-          echo('loginContainer');
-				}?>
-				>
-				
-        <h3>Log in to save progress</h3>
-        <button class="loginButton"><a href="./login.php">Login</a></button>
-      </div>
-      
-			
 		</header>
-		<h1 id='movieTitle'></h1>
 		<?php
+        $conn = new mysqli("localhost", "root", "", "users");	
         if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == true) {
           echo ( "<h1>Welcome " . $_SESSION['UserName'] . "</h1>");
-          echo( "<form method='post' action='./login.php'>");
+          /////Logout button
+          echo( "<form method='POST' action='./login.php'>");
           echo ("<button>Logout</button>");
           echo ("</form>");
-          // echo ("<h1>" . ($_SESSION['userScales']->fetch_row() . "</h1>"));
+          /////Save Button
+          echo ("<form method='POST' action='$_SERVER[PHP_SELF]'>");
+          echo ("<button name='scaleObject' id='saveButton'>Save Progress</button>");
+          echo ("</form>");
+
         } else {
           echo ("<h1>Sorry not logged in</h1>");
+          echo ("<h3>Log in to save progress</h3>");
+          echo ("<button class='loginButton'><a href='./login.php'>Login</a></button>");
+        }
+        //If the save button has been pressed
+        if (isset($_POST['scaleObject'])) {
+          $encodedScaleObject = json_encode($_POST['scaleObject']);
+          $updateSaveDataQuery = <<<HERE
+            UPDATE userinfo
+            SET Scales = $encodedScaleObject
+            WHERE userName = '$_SESSION[UserName]';
+          HERE;
+          $result = mysqli_query($conn, $updateSaveDataQuery) or die ("fatal error: " . mysqli_error($mysql));
         }
         
         ?>
@@ -76,10 +79,6 @@
   <script type="text/javascript">
 
 console.log("about to see php?");
-console.log( <?php //console log user scale objects to make sure they are recieved
-  $scaleObj = json_encode($_SESSION['userScales']);
-  echo($scaleObj);?>
-);
 var userScalesRaw = <?php //assign user scale objects from SQL to javascript variable
   $scaleObj = json_encode($_SESSION['userScales']);
   echo($scaleObj);?>;
@@ -101,11 +100,11 @@ for (let n = 0; n < noteList.length; n++) {
       userMinorScaleArray[`${noteList[n]}`].push(" ");
     }
   }
-console.log(userMinorScaleArray);
-</script>
-  <script src="final.js" defer>
-  </script>
+// console.log(userMinorScaleArray);
 
-  <!-- <?php echo '<script type="text/javascript"> sessionStorage.setItem("userScales", "' . json_encode($_SESSION['userScales']) . '");</script>';?> -->
+</script>
+<script src="final.js" defer>
+  stringifySaveData();
+  </script>
 </body>
 </html>

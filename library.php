@@ -52,6 +52,8 @@ function validatePasswordInput($password) {
         return false;
     } else return true;
 }  
-
+function loadUserCharts() {
+    
+}
 
 ?>
