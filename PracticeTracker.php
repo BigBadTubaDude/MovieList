@@ -16,27 +16,28 @@
 	</head>
 	<body>
     <section class='appContainer'>
-      <div>
         <?php
           $conn = new mysqli("localhost", "root", "", "users");	
           if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == true) {
             echo ("<header>");
             echo ( "<h1>Scale Tracker</h1>");
-            echo ( "<h1>Welcome " . $_SESSION['UserName'] . "</h1>");
+            echo ( "<h2>Welcome " . $_SESSION['UserName'] . "</h2>");
             echo ( "</header>");
             /////Logout button
-            echo( "<form method='POST' action='./login.php'>");
+            echo( "<form method='POST' action='./login.php' class='logout'>");
             echo ("<button>Logout</button>");
             echo ("</form>");
             /////Save Button
-            echo ("<form method='POST' action='$_SERVER[PHP_SELF]'>");
+            echo ("<form method='POST' action='$_SERVER[PHP_SELF]' class='saveButton'>");
             echo ("<button name='scaleObject' id='saveButton'>Save Progress</button>");
             echo ("</form>");
             
           } else {
+            echo ("<header>");
             echo ("<h1>Sorry not logged in</h1>");
-            echo ("<h3>Log in to save progress</h3>");
-            echo ("<button class='loginButton'><a href='./login.php'>Login</a></button>");
+            echo ("<h3 class='loginInstructions'>Log in to save progress</h3>");
+            echo ("</header>");
+            echo ("<button class='logout'><a href='./login.php'>Login</a></button>");
           }
           //If the save button has been pressed
           if (isset($_POST['scaleObject'])) {
@@ -52,7 +53,6 @@
           getScales($_SESSION['UserName'], md5($_SESSION['password'], false));
           instructionsBlock();
           ?>
-         </div>
       <!--Used tablegenerator.com to make table. Reworked with javascript for easy addition of classes and onclicks -->
       <style type="text/css"> 
   .tg  {border-collapse:collapse;border-spacing:0;}

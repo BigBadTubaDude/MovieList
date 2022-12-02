@@ -24,7 +24,7 @@ have file to run to create table of users?
 */
 function printLoginForm() {
     echo (<<<HERE
-        <form method='post' action="./login.php">
+        <form method='post' action="./login.php" class="loginForm">
             <lable for='userName'>Username</lable>
             <input type='text' name='userName'/>
             <lable for='password'>Password</lable>

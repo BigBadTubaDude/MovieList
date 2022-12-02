@@ -13,7 +13,7 @@
 		<script src="final.js" > </script>
 	</head>
 	<body>
-		<section class='appContainer'>
+		<section class='appContainerLogin'>
 			<header>
 				<h1>Scale Tracker</h1>
 				<h2>Log in</h2>
