@@ -21,7 +21,7 @@
           if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == true) {
             echo ("<header>");
             echo ( "<h1>Scale Tracker</h1>");
-            echo ( "<h2>Welcome " . $_SESSION['UserName'] . "</h2>");
+            echo ( "<h2>Welcome, " . $_SESSION['UserName'] . "</h2>");
             echo ( "</header>");
             /////Logout button
             echo( "<form method='POST' action='./login.php' class='logout'>");
@@ -35,9 +35,9 @@
           } else {
             echo ("<header>");
             echo ("<h1>Sorry not logged in</h1>");
-            echo ("<h3 class='loginInstructions'>Log in to save progress</h3>");
+            echo ("<h3 class='loginInstructions'>Log in to use and save progress</h3>");
             echo ("</header>");
-            echo ("<button class='logout'><a href='./login.php'>Login</a></button>");
+            echo ("<button class='login'><a href='./login.php'>Login</a></button>");
           }
           //If the save button has been pressed
           if (isset($_POST['scaleObject'])) {
@@ -51,10 +51,11 @@
             mysqli_query($conn, $updateSaveDataQuery) or die ("fatal error: " . mysqli_error($mysql));
           }
           try {
-            getScales($_SESSION['UserName'], md5($_SESSION['password'], false));
+            getScales($_SESSION['UserName'], md5($_SESSION['password'], false));        
           }
           catch(Exception $e) {
             $_SESSION['userScales'] = $_SESSION['emptyChart'];
+          
           }
           instructionsBlock();
           ?>
@@ -90,7 +91,9 @@
     </table>
     <script type="text/javascript">
 
-  console.log("about to see php?");
+  console.log(<?php print_r(json_encode($_SESSION['userScales'])) ?>);
+  console.log(<?php print_r(json_encode($_SESSION['emptyChart'])) ?>);
+  //TRANFER FROM PHP TO JAVASCRIPT into variable useemptyChart
   var userScalesRaw = <?php //assign user scale objects from SQL to javascript variable
     $scaleObj = json_encode($_SESSION['userScales']);
     echo($scaleObj);?>;

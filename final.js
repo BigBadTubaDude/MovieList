@@ -31,11 +31,6 @@
   }
 }
 
-
-  
-  //Click changes boxes
-  // document.getElementById("66-F").addEventListener("click", insertX);
-  // document.getElementById("60-G").innerHTML = "dfdfd";
   function stringifySaveData() {//Saves user progress value of button, to be submitted to this page
     //First saves current progress to an object and stringifies it
     const savableScalesObject = JSON.stringify(userScales);//Stringify

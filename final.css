@@ -46,14 +46,21 @@ form > input[type=radio] {
 	margin-top: 14px;
 	margin-bottom: 13px;
 }
+input[type="radio"] + lable {
+	margin-left: 5px;
+	margin-right: 0px;
+	padding-right: 0px;
+}
 input[type=text] {
 	display: block;
 	margin-bottom: 10px;
 }
+
 form.loginform lable:first-of-type {
 	display: inline;
 	float: right;
 	padding-left: 3px;
+	/* padding-left: 3px; */
 }
 
 /*The table*/
@@ -86,7 +93,7 @@ header {
 }
 
 /*Buttons*/
-.logout {
+.logout, .login{
 	justify-self: end;
 	align-self: center;
 }
