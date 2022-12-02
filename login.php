@@ -125,27 +125,17 @@
 								} else {
 									print ("That user already exists. Please log in.");
 								}
-						} else {
-
 						}
 					}
 
 					//If "back" is selected, takes user back to main page without logging in
 					if ($_POST['radLogin'] == 'back') {
 						header("Location: /movielist/PracticeTracker.php");
-
 					}
-					
 				}
 				// print;
-				instructionsBlock();
+				// instructionsBlock();
 			?>
-
-			<sript>
-
-			</script>
 		</section>
-		
 	</body>
-	
 </html>
