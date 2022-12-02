@@ -41,33 +41,30 @@
     const savableScalesObject = JSON.stringify(userScales);//Stringify
     const saveButton = document.getElementById('saveButton');//assign button tag to variable
     saveButton.value = savableScalesObject; // assign stringified scales object value to button
-    console.log(saveButton);
+    // console.log(saveButton);
   }
   function insertX(id) {
     //change userscale arrays based on click
     let tdCell = document.getElementById(id);
     let note = id.substring(id.indexOf('-', id.indexOf('-') + 1) + 1);
-    let index = id.substring(id.indexOf('-') + 1, id.indexOf('-', id.indexOf('-',id.indexOf('-') + 1)));
+    let index = parseInt(id.substring(id.indexOf('-') + 1, id.indexOf('-', id.indexOf('-',id.indexOf('-') + 1))));
     let tempo = id.substring(0, id.indexOf('-'));
     let canAdd = index == 0 || userMajorScaleArray[note][index - 1] == 'X';
-    let canDelete = index == numberOfRows - 1 || userMajorScaleArray[note][index] == ' ';
-
-    if (tdCell.textContent.includes(' ')) {
-      if (canAdd) {
-        tdCell.innerHTML = 'X';
-        currentScaleType == 'major' 
-          ? userMajorScaleArray[note][index] = 'X'
-          : userMinorScaleArray[note][index] = 'X';
-      }
+    let canDelete = index == numberOfRows - 1 || userMajorScaleArray[note][index] != 'X';
+    // console.log(userMajorScaleArray[note][0]);
+    if (tdCell.textContent.includes('X') && canDelete) {
+          tdCell.innerHTML = ' ';
+          currentScaleType == 'major' 
+            ? userMajorScaleArray[note][index] = ' '
+            : userMinorScaleArray[note][index] = ' ';
     }
-    else if (canDelete) {
-      tdCell.innerHTML = ' ';
-      currentScaleType == 'major'
-        ? userMajorScaleArray[note][index] = ' '
-        : userMinorScaleArray[note][index] = ' ';
-      
+    else if (canAdd) {
+      tdCell.innerHTML = 'X';
+      currentScaleType == 'major' 
+        ? userMajorScaleArray[note][index] = 'X'
+        : userMinorScaleArray[note][index] = 'X';
     }
-    console.log(userScales);
+    // console.log(userScales);
     stringifySaveData();
   }
   stringifySaveData();
