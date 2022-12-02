@@ -9,12 +9,13 @@
 	<head>
 		<title>Movie List</title>
 		<link href="final.css" rel="stylesheet" type="text/css" />
+    <script src="variables.js"></script>
 	</head>
 	<body>
     <header>
       <h1>Scale Tracker</h1>
 			<div class= 
-      <?php 
+      <?php         
 				if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn']) {
           echo('displayNone') ;
         } else {
@@ -31,10 +32,11 @@
 		<h1 id='movieTitle'></h1>
 		<?php
         if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == true) {
-          echo ( "<h1>Welcome</h1>");
+          echo ( "<h1>Welcome " . $_SESSION['UserName'] . "</h1>");
           echo( "<form method='post' action='./login.php'>");
           echo ("<button>Logout</button>");
           echo ("</form>");
+          // echo ("<h1>" . ($_SESSION['userScales']->fetch_row() . "</h1>"));
         } else {
           echo ("<h1>Sorry not logged in</h1>");
         }
@@ -71,6 +73,39 @@
   <tbody id='scaleChartBody'>
     </tbody>
   </table>
-  <script src="final.js" defer></script>
+  <script type="text/javascript">
+
+console.log("about to see php?");
+console.log( <?php //console log user scale objects to make sure they are recieved
+  $scaleObj = json_encode($_SESSION['userScales']);
+  echo($scaleObj);?>
+);
+var userScalesRaw = <?php //assign user scale objects from SQL to javascript variable
+  $scaleObj = json_encode($_SESSION['userScales']);
+  echo($scaleObj);?>;
+var userScalesObject = userScalesRaw['Scales']; // extracts the scales object from the larger object. 
+var userScales = JSON.parse(userScalesObject); //Parses to js object
+var userMajorScaleArray = userScales['major'];
+var userMinorScaleArray = userScales['minor'];
+for (let n = 0; n < noteList.length; n++) {
+    for (let r = 0; r < numberOfRows; r++) {
+      // console.log(noteList[n]);
+      // console.log(userMinorScaleArray[`${noteList[n]}`]);
+      userMajorScaleArray[`${noteList[n]}`].push(" ");
+    }
+  }
+  for (let n = 0; n < noteList.length; n++) {
+    for (let r = 0; r < numberOfRows; r++) {
+      // console.log(noteList[n]);
+      // console.log(userMinorScaleArray[`${noteList[n]}`]);
+      userMinorScaleArray[`${noteList[n]}`].push(" ");
+    }
+  }
+console.log(userMinorScaleArray);
+</script>
+  <script src="final.js" defer>
+  </script>
+
+  <!-- <?php echo '<script type="text/javascript"> sessionStorage.setItem("userScales", "' . json_encode($_SESSION['userScales']) . '");</script>';?> -->
 </body>
 </html>

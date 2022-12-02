@@ -38,24 +38,36 @@
 					&& isset($_POST['password']) 
 					&& validatePasswordInput($_POST['password'])){
 						$retrievedHashedPassword = md5($_POST['password'], false);
-					 	$checkIfUserPassMatchQuery = 
-							(<<<HERE
-								SELECT * FROM userinfo 
-								WHERE 
-								userName='$_POST[userName]' AND
-								password='$retrievedHashedPassword';		
-							HERE);
+					 	$checkIfUserPassMatchQuery = <<<HERE
+							SELECT * FROM userinfo 
+							WHERE 
+							userName='$_POST[userName]' AND
+							password='$retrievedHashedPassword';		
+							HERE;
 						$userPassMatch = mysqli_query($conn, $checkIfUserPassMatchQuery) or die ("fatal error: " . mysqli_error($mysql));
+						$row = $userPassMatch->fetch_assoc();
 						//USE query to check user and pass
 						if ($userPassMatch->num_rows < 1) {
 							echo ("Incorrect username or password. Try again.");
-						} else { //Correct user/pass
+						} 
+						else { //Correct user/pass
 							//Logs user in and directs them to main page
+							$getUserScales = <<<HERE
+								SELECT Scales FROM userinfo 
+								WHERE 
+								userName='$_POST[userName]' AND
+								password='$retrievedHashedPassword';		
+								HERE;
+							$_SESSION['userScales'] = mysqli_query($conn, $getUserScales)->fetch_object() or die ("fatal error: " . mysqli_error($mysql));
+							
+							// $userScales = $userScales.st
+
 							$_SESSION['LoggedIn'] = true;
+							$_SESSION['UserName'] = $row['userName'];
+							$_SESSION['UserMajor'] = '{}';
+							$_SESSION['UserMinor'] = '{}';
 							header("Location: /movielist/movieList.php");
-
 						}
-
 				}
 			}
 				
@@ -75,16 +87,46 @@
 							$result = mysqli_query($conn, $checkIfUserExistsQuery) or die ("fatal error: " . mysqli_error($mysql));				
 							if ($result->num_rows < 1) { //a correct user/pass combo exists
 								$hashedPassword = md5($_POST['password'], false); //hash inputted password to compare to database
+								$scalesJSON = json_encode("{'major':[], 'minor':[]}");
 								$addNewUserQuery = (<<<HERE
 									INSERT INTO userinfo 
 									(userName, password, Scales)
 									values (
 										'$_POST[userName]',
 										'$hashedPassword',
-										'{}'
+										'{
+											"major":{
+												"Ab": [],
+												"A": [],
+												"Bb": [],
+												"B": [],
+												"C": [],
+												"Db": [],
+												"D": [],
+												"Eb": [],
+												"E": [],
+												"F": [],
+												"Gb": [],
+												"G": []	
+											},											
+											"minor":{
+												"Ab": [],
+												"A": [],
+												"Bb": [],
+												"B": [],
+												"C": [],
+												"Db": [],
+												"D": [],
+												"Eb": [],
+												"E": [],
+												"F": [],
+												"Gb": [],
+												"G": []
+											}}'
 									);
 									HERE);
 									$result = mysqli_query($conn, $addNewUserQuery) or die ("fatal error: " . mysqli_error($mysql));
+
 									echo ("Thank you for creating an account.</br> Please log in.");
 							} else {
 								print ("That user already exists. Please log in.");
@@ -103,5 +145,10 @@
 			}
 			// print;
 		?>
+		<script>
+
+		</script>
+		
 	</body>
+	
 </html>
