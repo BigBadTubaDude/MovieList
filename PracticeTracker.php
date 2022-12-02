@@ -50,7 +50,12 @@
             HERE;
             mysqli_query($conn, $updateSaveDataQuery) or die ("fatal error: " . mysqli_error($mysql));
           }
-          getScales($_SESSION['UserName'], md5($_SESSION['password'], false));
+          try {
+            getScales($_SESSION['UserName'], md5($_SESSION['password'], false));
+          }
+          catch(Exception $e) {
+            $_SESSION['userScales'] = $_SESSION['emptyChart'];
+          }
           instructionsBlock();
           ?>
       <!--Used tablegenerator.com to make table. Reworked with javascript for easy addition of classes and onclicks -->
