@@ -50,8 +50,8 @@
     let index = parseInt(id.substring(id.indexOf('-') + 1, id.indexOf('-', id.indexOf('-',id.indexOf('-') + 1))));
     let tempo = id.substring(0, id.indexOf('-'));
     let canAdd = index == 0 || userMajorScaleArray[note][index - 1] == 'X';
-    let canDelete = index == numberOfRows - 1 || userMajorScaleArray[note][index] != 'X';
-    // console.log(userMajorScaleArray[note][0]);
+    let canDelete = index == numberOfRows - 1 || userMajorScaleArray[note][index + 1] != 'X';
+    // console.log(userMajorScaleArray[note]);
     if (tdCell.textContent.includes('X') && canDelete) {
           tdCell.innerHTML = ' ';
           currentScaleType == 'major' 
