@@ -70,6 +70,6 @@
     console.log(userScales);
     stringifySaveData();
   }
-  
+  stringifySaveData();
 
   
