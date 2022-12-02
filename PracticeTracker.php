@@ -12,16 +12,18 @@
 		<link href="final.css" rel="stylesheet" type="text/css" />
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"> -->
     <script src="variables.js"></script>
+    <script src="instructions.js"></script>
 	</head>
 	<body>
     <section class='appContainer'>
-      <header>
-        <h1>Scale Tracker</h1>
-      </header>
-      <?php
+      <div>
+        <?php
           $conn = new mysqli("localhost", "root", "", "users");	
           if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == true) {
+            echo ("<header>");
+            echo ( "<h1>Scale Tracker</h1>");
             echo ( "<h1>Welcome " . $_SESSION['UserName'] . "</h1>");
+            echo ( "</header>");
             /////Logout button
             echo( "<form method='POST' action='./login.php'>");
             echo ("<button>Logout</button>");
@@ -48,8 +50,9 @@
             mysqli_query($conn, $updateSaveDataQuery) or die ("fatal error: " . mysqli_error($mysql));
           }
           getScales($_SESSION['UserName'], md5($_SESSION['password'], false));
-          
+          instructionsBlock();
           ?>
+         </div>
       <!--Used tablegenerator.com to make table. Reworked with javascript for easy addition of classes and onclicks -->
       <style type="text/css"> 
   .tg  {border-collapse:collapse;border-spacing:0;}

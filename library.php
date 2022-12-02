@@ -13,8 +13,10 @@ Date 11/30/2022
 Function library: filename-library.php
 functions:
     printLoginForm()
-    validateUserNameInput(username string) returns bool
-    validatePasswordInput(password string) returns bool
+    validateUserNameInput(username string)
+    validatePasswordInput(password string) 
+    getScales($userName,$password) 
+    instructionsBlock()
 
     
 ******************************************
@@ -37,8 +39,7 @@ function printLoginForm() {
             </br>
             <button type='submit' value ='submit'>Submit</button>
         </form>
-       
-    HERE);
+        HERE);
 }
 function validateUserNameInput($username) {
     if (strlen($username) == 0) {
@@ -62,5 +63,16 @@ function getScales($userName,$password) {
     HERE;
     $_SESSION['userScales'] = mysqli_query($conn, $getUserScales)->fetch_object() or die ("fatal error: " . mysqli_error($mysql));
   }
-  
+function instructionsBlock() {
+    echo <<<HERE
+    <div id='instructions'>
+        <h1 id='instructionsH'></h1>
+        <p id='instructionsP'></p>
+    </div>
+    <div id='whyScales'>
+        <h2 id='whyH'></h2>
+        <p id='whyP'></p>
+    </div>
+    HERE;
+}
 ?>

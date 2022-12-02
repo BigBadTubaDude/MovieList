@@ -12,15 +12,24 @@
 }
 
 /*CONTAINER*/
+html {
+	/* background: rgb(2,0,36); */
+	/* background: linear-gradient(343deg, rgba(2,0,36,1) 0%, rgba(38,157,37,0.7682423311121324) 45%, rgba(0,212,255,1) 100%); */
+	height: 100vh;
+}
 body {
 	display: flex;
 	justify-content: center;
+	height: 100vh;
 }
 .appContainer {
 	display: grid;
+	grid-template-columns: 1fr 3fr;
+	grid-template-rows: 33% 33% 33%;
 	justify-items: center;
-	gap: 30px;
 	text-align: center;
+	height: 100%;
+	width: 100vw;
 }
 /*The LOGGIN PAGE*/
 form {
@@ -32,11 +41,17 @@ form > input[type=radio] {
 }
 
 /*The table*/
+table.tg {
+	grid-column-start: 2;
+	grid-row-end: -1;
+	grid-row-start: 1;
+	height: 84%;
+}
 table > * {
 	text-align: center;
 }
 tr#headRow > th {
-	height: 2em;
+	height: 1em;
 	width:3em;
 	text-align: center;
 }

@@ -9,6 +9,7 @@
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"> -->
 		<title>Title</title>
 		<link href="final.css" rel="stylesheet" type="text/css" />
+		<script src="instructions.js"></script>
 		<script src="final.js" > </script>
 	</head>
 	<body>
@@ -137,19 +138,14 @@
 					
 				}
 				// print;
+				instructionsBlock();
 			?>
-			<div id='instructions'>
-				<h1 id='instructionsH'></h1>
-				<p id='instructionsP'></p>
-			</div>
-			<div id='whyScales'>
-				<h2 id='whyH'></h2>
-				<p id='whyP'></p>
-			</div>
+
 			<sript>
 
 			</script>
 		</section>
+		
 	</body>
 	
 </html>

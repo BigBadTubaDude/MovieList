@@ -9,4 +9,10 @@ const whyP = document.getElementById('whyP');
 
  var instrHeading = "How to use";
  var whyHeading = "Why practice scales?";
- var 
+ var instrPara = ``;
+ var whyPara = ``;
+
+ instructionsH.innerHTML(instrHeading);
+ instructionsP.innerHTML(instrPara);
+ whyH.innerHTML(whyHeading);
+ whyP.innerHTML(whyPara)
