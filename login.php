@@ -60,7 +60,7 @@
 								$_SESSION['password'] = $_POST['password'];
 								getScales($_SESSION['UserName'], md5($_SESSION['password'], false));
 								//Logs user in and directs them to main page
-								header("Location: /movielist/PracticeTracker.php");
+								header("Location: /FinalCA/PracticeTracker.php");
 							}
 					}
 				}
@@ -130,7 +130,7 @@
 
 					//If "back" is selected, takes user back to main page without logging in
 					if ($_POST['radLogin'] == 'back') {
-						header("Location: /movielist/PracticeTracker.php");
+						header("Location: /FinalCA/PracticeTracker.php");
 					}
 				}
 				// print;
