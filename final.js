@@ -18,7 +18,7 @@
         console.log(userScales['major'][noteList[n - 1]][0]);
         let checkText = document.createTextNode(`${scaleType == 'major'
           ? userScales['major'][noteList[n - 1]][r]
-          : userMinorScaleArray[noteList[n - 1]][r]}`); //create check text node
+          : userScales['minor'][noteList[n - 1]][r]}`); //create check text node
           // console.log(userMajorScaleArray[noteList[n - 1]][n - 1]);
         tdTag.appendChild(checkText); //add X or blank to td depending on if user has checked it
         let cellID = `${tempoList[r]}-${r}-${noteList[n - 1]}`;
@@ -32,7 +32,7 @@
 }
 
 
-  makeScaleChart(currentScaleType);
+  
   //Click changes boxes
   // document.getElementById("66-F").addEventListener("click", insertX);
   // document.getElementById("60-G").innerHTML = "dfdfd";
@@ -67,6 +67,8 @@
     // console.log(userScales);
     stringifySaveData();
   }
+
   stringifySaveData();
+  makeScaleChart(currentScaleType);
 
   

@@ -2,10 +2,47 @@
 	Coleman Alexander
 	Date 11/30/2022
 */
+/*GENERAL*/
 .hidden {
 	visibility: hidden;
 }
 .displayNone {
 	display: none;
 	visibility: hidden;
+}
+
+/*CONTAINER*/
+body {
+	display: flex;
+	justify-content: center;
+}
+.appContainer {
+	display: grid;
+	justify-items: center;
+	gap: 30px;
+	text-align: center;
+}
+/*The LOGGIN PAGE*/
+form {
+	text-align: center;
+}
+form > input[type=radio] {
+	margin-top: 11px;
+	margin-bottom: 10px;
+}
+
+/*The table*/
+table > * {
+	text-align: center;
+}
+tr#headRow > th {
+	height: 2em;
+	width:3em;
+	text-align: center;
+}
+tr > .tg.tg-0lax{
+	text-align: center;
+	vertical-align: middle;
+	margin: auto;
+	padding: auto;
 }

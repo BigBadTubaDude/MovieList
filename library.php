@@ -52,8 +52,15 @@ function validatePasswordInput($password) {
         return false;
     } else return true;
 }  
-function loadUserCharts() {
-    
-}
-
+function getScales($userName,$password) {
+    $conn = new mysqli("localhost", "root", "", "users");	
+    $getUserScales = <<<HERE
+    SELECT Scales FROM userinfo 
+    WHERE 
+    userName='$userName' AND
+    password='$password';		
+    HERE;
+    $_SESSION['userScales'] = mysqli_query($conn, $getUserScales)->fetch_object() or die ("fatal error: " . mysqli_error($mysql));
+  }
+  
 ?>
