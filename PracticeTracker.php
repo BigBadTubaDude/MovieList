@@ -16,7 +16,7 @@
       <h1>Scale Tracker</h1>
 		</header>
 		<?php
-        $conn = new mysqli("localhost", "root", "", "users");	
+        $conn = new mysqli("localhost", "root", "", "users");
         if (isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == true) {
           echo ( "<h1>Welcome " . $_SESSION['UserName'] . "</h1>");
           /////Logout button
@@ -25,7 +25,7 @@
           echo ("</form>");
           /////Save Button
           echo ("<form method='POST' action='$_SERVER[PHP_SELF]'>");
-          echo ("<button name='scaleObject' id='saveButton'>Save Progress</button>");
+          echo ("<button name='scaleObject' onclick='() => stringifySaveData($_SESSION['userScales'])' id='saveButton'>Save Progress</button>");
           echo ("</form>");
 
         } else {
@@ -41,8 +41,12 @@
             SET Scales = $encodedScaleObject
             WHERE userName = '$_SESSION[UserName]';
           HERE;
-          $result = mysqli_query($conn, $updateSaveDataQuery) or die ("fatal error: " . mysqli_error($mysql));
+          mysqli_query($conn, $updateSaveDataQuery) or die ("fatal error: " . mysqli_error($mysql));
+          getUserChartFromSQL();
         }
+        echo 
+        <script type='text/css'></script>;
+      
         
         ?>
 		<!--Used tablegenerator.com to make table. Reworked with javascript for easy addition of classes and onclicks -->
@@ -55,6 +59,7 @@
     .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
     .tg .tg-0lax{text-align:left;vertical-align:top}
     </style>
+    <h1><?php echo '$_SESSION[UserName]' ?></h1>
 <table class="tg">
   <thead>
     <tr id='headRow'>
@@ -79,6 +84,7 @@
   <script type="text/javascript">
 
 console.log("about to see php?");
+
 var userScalesRaw = <?php //assign user scale objects from SQL to javascript variable
   $scaleObj = json_encode($_SESSION['userScales']);
   echo($scaleObj);?>;
@@ -86,25 +92,27 @@ var userScalesObject = userScalesRaw['Scales']; // extracts the scales object fr
 var userScales = JSON.parse(userScalesObject); //Parses to js object
 var userMajorScaleArray = userScales['major'];
 var userMinorScaleArray = userScales['minor'];
+
 for (let n = 0; n < noteList.length; n++) {
+
     for (let r = 0; r < numberOfRows; r++) {
       // console.log(noteList[n]);
       // console.log(userMinorScaleArray[`${noteList[n]}`]);
-      userMajorScaleArray[`${noteList[n]}`].push(" ");
+      // userScales['major'][noteList[n - 1]][r] = ("x");
     }
   }
   for (let n = 0; n < noteList.length; n++) {
     for (let r = 0; r < numberOfRows; r++) {
       // console.log(noteList[n]);
       // console.log(userMinorScaleArray[`${noteList[n]}`]);
-      userMinorScaleArray[`${noteList[n]}`].push(" ");
+      // userMinorScaleArray[`${noteList[n]}`] = (" ");
     }
   }
-// console.log(userMinorScaleArray);
+// console.log('frfr');
 
 </script>
 <script src="final.js" defer>
-  stringifySaveData();
+  stringifySaveData(<?php$_SESSION['userScales']?>);
   </script>
 </body>
 </html>
